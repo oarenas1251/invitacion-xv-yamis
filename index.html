@@ -27,14 +27,15 @@ body {
 .mobile {
     width: 100%;
     max-width: 420px;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     position: relative;
 
     background: url('fondo.png') no-repeat center top;
     background-size: 100% auto;
     background-color: black;
 
-    overflow: visible;
+    overflow: hidden;
 }
 
 /* GLOW GENERAL */
@@ -74,7 +75,8 @@ body {
 /* CONTENIDO */
 .content {
     position: absolute;
-    bottom: 170px;
+    bottom: 20%;
+    transform: translateY(50%);
     width: 100%;
     text-align: center;
     padding: 0 20px;
@@ -227,7 +229,7 @@ body {
 }
 .baby-yoda {
     position: absolute;
-    bottom: 330px;
+    bottom: calc(20% + 80px);
     right: 20px;
     width: 80px;
     z-index: 1;
