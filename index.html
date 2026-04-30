@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<title>XV Yamis</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.mobile {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    position: relative;
+
+    background: url('fondo.png') no-repeat center top;
+    background-size: 100% auto;
+    background-color: black;
+
+    overflow: visible;
+}
+
+/* GLOW GENERAL */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 50% 40%, rgba(255,120,200,0.25), transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.35));
+}
+
+/* PARTÍCULAS */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particles span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 10s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* CONTENIDO */
+.content {
+    position: absolute;
+    bottom: 170px;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+    color: white;
+    z-index: 2;
+}
+
+/* CONTADOR */
+.countdown {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.box {
+    flex: 1;
+    padding: 12px 8px;
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.3),
+        inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+.box span {
+    display: block;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+/* BOTÓN */
+.map-btn {
+    display: inline-block;
+    padding: 14px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+
+    background: linear-gradient(135deg, #ff6ec7, #ff3cac);
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+
+    animation: breath 2s infinite;
+    transition: 0.3s;
+}
+
+.map-btn:hover {
+    transform: scale(1.05);
+}
+
+@keyframes breath {
+    0%,100% { box-shadow: 0 0 10px rgba(255,105,180,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,105,180,0.9); }
+}
+
+/* PANTALLA DE BIENVENIDA */
+.welcome {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, #0a1a12, #000);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+
+.welcome.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.welcome h2 {
+    color: white;
+    font-size: 18px;
+    letter-spacing: 3px;
+    opacity: 0.8;
+    margin-bottom: 45px;
+    animation: fadeIn 2s ease forwards;
+}
+
+.welcome h1 {
+    color: #8fbfa6;
+    font-family: 'Great Vibes', cursive;
+    font-size: 52px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(143,191,166,0.6);
+    animation: fadeIn 2s ease 0.5s forwards;
+    opacity: 0;
+}
+
+.open-btn {
+    padding: 16px 40px;
+    border: 2px solid rgba(143,191,166,0.6);
+    border-radius: 30px;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    animation: fadeIn 2s ease 1s forwards, breath 2s infinite 2s;
+    opacity: 0;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.open-btn:hover {
+    background: rgba(143,191,166,0.2);
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+.baby-yoda {
+    position: absolute;
+    bottom: 330px;
+    right: 20px;
+    width: 80px;
+    z-index: 1;
+    animation: fade 12s ease-in-out infinite;
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0; }
+    30%, 70% { opacity: 1; }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="welcome" id="welcome">
+    <h2>ESTÁS INVITADO(A)</h2>
+    <h1>XV Yamis</h1>
+    <button class="open-btn" id="openBtn">Abrir Invitación <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="white" stroke-width="1.5" style="vertical-align:middle;margin-left:6px"><rect x="1" y="1" width="16" height="12" rx="2"/><path d="M1 1l8 6 8-6"/></svg></button>
+</div>
+
+<div class="mobile">
+
+    <div class="overlay"></div>
+
+<!-- PARTÍCULAS -->
+<div class="particles">
+    <span style="left:10%; animation-delay:0s"></span>
+    <span style="left:30%; animation-delay:2s"></span>
+    <span style="left:50%; animation-delay:4s"></span>
+    <span style="left:70%; animation-delay:1s"></span>
+    <span style="left:90%; animation-delay:3s"></span>
+</div>
+
+<div class="content">
+
+    <div class="countdown">
+        <div class="box"><span id="days">0</span><div class="label">DÍAS</div></div>
+        <div class="box"><span id="hours">0</span><div class="label">HRS</div></div>
+        <div class="box"><span id="minutes">0</span><div class="label">MIN</div></div>
+        <div class="box"><span id="seconds">0</span><div class="label">SEG</div></div>
+    </div>
+
+    <a class="map-btn"
+    href="https://www.google.com/maps?q=Salón+Luna+Luxxe+Coacalco"
+    target="_blank">
+    Ver ubicación
+    </a>
+
+</div>
+
+<img class="baby-yoda" src="baby-yoda.png" alt="Baby Yoda">
+
+</div>
+
+<audio id="music" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const targetDate = new Date("May 23, 2026 15:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
+    document.getElementById("hours").innerText = Math.floor((diff / (1000*60*60)) % 24);
+    document.getElementById("minutes").innerText = Math.floor((diff / (1000*60)) % 60);
+    document.getElementById("seconds").innerText = Math.floor((diff / 1000) % 60);
+}
+
+setInterval(updateCountdown, 1000);
+
+document.getElementById("openBtn").addEventListener("click", () => {
+    document.getElementById("welcome").classList.add("hidden");
+    const music = document.getElementById("music");
+    music.currentTime = 148;
+    music.play();
+});
+</script>
+
+</body>
+</html>
