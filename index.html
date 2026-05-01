@@ -305,11 +305,6 @@ body {
     50% { transform: rotateX(180deg); }
 }
 
-@keyframes breathGreen {
-    0%,100% { box-shadow: 0 0 10px rgba(143,191,166,0.5); }
-    50% { box-shadow: 0 0 25px rgba(143,191,166,0.9); }
-}
-
 @keyframes fadeIn {
     to { opacity: 1; }
 }
@@ -319,17 +314,13 @@ body {
     right: 20px;
     width: 80px;
     z-index: 1;
+    cursor: pointer;
     animation: yodaFloat 3s ease-in-out infinite;
 }
 
-@keyframes fade {
-    0%, 100% { opacity: 0; }
-    30%, 70% { opacity: 1; }
-}
-
 @keyframes yodaFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(0, -12px); }
 }
 
 /* DESTELLOS */
@@ -366,15 +357,68 @@ body {
     100% { transform: scale(1.5) translate(var(--tx), var(--ty)); opacity: 0; }
 }
 
-/* BABY YODA REACTIVO */
-.baby-yoda { cursor: pointer; }
-.baby-yoda.tapped { animation: yodaReact 0.6s ease; }
+/* SPEECH BUBBLE */
+.yoda-wrapper {
+    position: absolute;
+    bottom: calc(18% + 110px);
+    left: 0;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 8px;
+}
 
-@keyframes yodaReact {
-    0% { transform: scale(1) rotate(0); }
-    30% { transform: scale(1.3) rotate(-10deg); }
-    60% { transform: scale(0.9) rotate(5deg); }
-    100% { transform: scale(1) rotate(0); }
+.yoda-wrapper .baby-yoda {
+    position: static;
+    width: 80px;
+
+    animation: 
+        yodaFloat 3s ease-in-out infinite;
+}
+
+.yoda-wrapper .baby-yoda.vibrate {
+    animation: yodaVibrate 0.35s ease;
+}
+
+.speech-bubble {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    gap: 10px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 12px;
+    width: 75%;
+    max-width: 75%;
+    color: white;
+    font-size: 11px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.speech-bubble.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.speech-bubble .chewbacca-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(212,175,55,0.5);
+    flex-shrink: 0;
 }
 
 /* SHOOTING STARS */
@@ -416,22 +460,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* SABLE DE LUZ SEPARADOR */
-.lightsaber {
-    position: relative;
-    height: 4px;
-    margin: 20px auto;
-    width: 0;
-    border-radius: 4px;
-    background: #8fbfa6;
-    box-shadow: 0 0 10px #8fbfa6, 0 0 20px #8fbfa6, 0 0 40px rgba(143,191,166,0.5);
-}
-
-@keyframes ignite {
-    0% { width: 0; opacity: 0; }
-    100% { width: 60%; opacity: 1; }
-}
-
 /* TYPEWRITER */
 .typewriter {
     overflow: hidden;
@@ -451,10 +479,6 @@ body {
 
 @keyframes blink {
     50% { border-color: transparent; }
-}
-
-@keyframes cursorOff {
-    to { border-color: transparent; }
 }
 
 .typewriter.done {
@@ -520,7 +544,13 @@ body {
 
 </div>
 
-<img class="baby-yoda" src="baby-yoda.png" alt="Baby Yoda">
+<div class="yoda-wrapper">
+    <div class="speech-bubble" id="speechBubble">
+        <img class="chewbacca-img" src="chewbacca.png" alt="Chewbacca">
+        <span>⚠️A nuestra quinceañera no le gusta <strong>Star Wars</strong>, pero su papá insistió en diseñar así esta invitación. 😅</span>
+    </div>
+    <img class="baby-yoda" src="baby-yoda.png" alt="Baby Yoda">
+</div>
 
 </div>
 
@@ -614,14 +644,16 @@ document.getElementById("openBtn").addEventListener("click", () => {
     }, 4000);
 });
 
-// Baby Yoda reactivo
+// Baby Yoda: toggle speech bubble
+let bubbleTimer;
 document.querySelector(".baby-yoda").addEventListener("click", (e) => {
     e.stopPropagation();
-    const yoda = e.currentTarget;
-    yoda.classList.remove("tapped");
-    void yoda.offsetWidth;
-    yoda.classList.add("tapped");
-    setTimeout(() => yoda.classList.remove("tapped"), 600);
+    const bubble = document.getElementById("speechBubble");
+    clearTimeout(bubbleTimer);
+    bubble.classList.toggle("visible");
+    if (bubble.classList.contains("visible")) {
+        bubbleTimer = setTimeout(() => bubble.classList.remove("visible"), 7000);
+    }
 });
 
 // Touch/click stars
@@ -645,6 +677,7 @@ document.querySelector(".mobile").addEventListener("click", (e) => {
         setTimeout(() => s.remove(), 1000);
     }
 });
+
 </script>
 
 </body>
